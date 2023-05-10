@@ -14,7 +14,7 @@ public:
 
 public:
 	virtual HANDLE GetHandle(void) override { return (HANDLE)mSocket; };
-	
+	virtual void Dispatch(IocpEvent* iocpEvent, int numOfBytes) override;
 public:
 	void Connect();
 	void NBSend(const char* str);

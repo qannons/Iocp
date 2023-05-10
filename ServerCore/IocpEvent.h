@@ -16,6 +16,7 @@ public:
 
 public:
 	eEventType eventType;
+	IocpObjectRef owner;
 };
 
 class SendEvent : public IocpEvent

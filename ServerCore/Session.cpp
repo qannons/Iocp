@@ -2,6 +2,11 @@
 #include "Session.h"
 #include <cstring>
 
+void Session::Dispatch(IocpEvent* iocpEvent, int numOfBytes)
+{
+
+}
+
 void Session::Connect()
 {
 	mAddr.sin_family = AF_INET;

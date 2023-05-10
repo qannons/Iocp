@@ -9,9 +9,18 @@ void IocpCore::Register(IocpObjectRef iocpObject)
 
 void IocpCore::Dispatch()
 {
-	DWORD bytes;
+	DWORD numOfBytes;
 	ULONG_PTR key;
 
 	IocpEvent* iocpEvent;
-	::GetQueuedCompletionStatus(mHandle, &bytes, &key, (LPOVERLAPPED*)&iocpEvent, INFINITE)
+	if (::GetQueuedCompletionStatus(mHandle, &numOfBytes, &key, (LPOVERLAPPED*)&iocpEvent, INFINITE))
+	{
+		IocpObjectRef iocpObject = iocpEvent->owner;
+		iocpObject->Dispatch(iocpEvent, numOfBytes);
+	}
+
+	else
+	{
+		SocketUtils::HandleError("dispatch");
+	}
 }

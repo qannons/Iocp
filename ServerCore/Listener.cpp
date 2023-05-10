@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "Listener.h"
+#include "SessionManager.h"
+#include "IocpCore.h"
 
-Listener::Listener()
+Listener::Listener(IocpCoreRef iocpCore) : mCore(iocpCore)
 {
 	mSocket = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -42,11 +44,12 @@ void Listener::fn()
 		if (socket == INVALID_SOCKET)
 			SocketUtils::HandleError("socket");
 
-		char buf[1024];
-		if (::recv(socket, buf, sizeof(buf), 0) <= 0)
-			SocketUtils::HandleError("Recv");
+		SessionRef session = make_shared<Session>();
+		session->mSocket = socket;
 
-		cout << buf << endl;
+		mCore->Register(session);
+		GSessionManager->Register(session);
 	}
 }
  
+

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Session.h"
 #include <cstring>
+
 void Session::Connect()
 {
 	mAddr.sin_family = AF_INET;
@@ -9,6 +10,17 @@ void Session::Connect()
 
 	if (::connect(mSocket, (SOCKADDR*)&mAddr, sizeof(mAddr)) == SOCKET_ERROR)
 		SocketUtils::HandleError("Connect");
+}
+
+void Session::NBSend(const char* str)
+{
+	strcpy_s(mSendBuf, str);
+	WSABUF wsaBuf;
+	wsaBuf.buf = mSendBuf;
+	wsaBuf.len = sizeof(mSendBuf);
+
+	DWORD bytes;
+	::WSASend(mSocket, &wsaBuf, 1, &bytes, 0, &mSendEvent, 0);
 }
 
 void Session::Send(const char* str)
@@ -20,5 +32,10 @@ void Session::Send(const char* str)
 
 void Session::Recv()
 {
+	if (::recv(mSocket, mRecvBuf, sizeof(mRecvBuf), 0) <= 0)
+		SocketUtils::HandleError("Recv");
+
+	cout << mRecvBuf << endl;
 	
 }
+

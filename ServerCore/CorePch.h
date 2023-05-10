@@ -6,6 +6,7 @@ using namespace std;
 #include "Types.h"
 #include "CoreMacro.h"
 #include "CoreTLS.h"
+#include "CoreGlobal.h"
 
 //소켓 프로그래밍 라이브러리
 #include <winsock2.h>

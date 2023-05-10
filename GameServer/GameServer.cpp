@@ -1,5 +1,6 @@
 ﻿#include "pch.h"
 #include "Listener.h"
+#include "SessionManager.h"
 
 int main()
 {
@@ -8,10 +9,16 @@ int main()
 	{
 		return 1;
 	}
-
+	
 	Listener listener;
 
 	listener.Start();
+	while (true)
+	{
+		GSessionManager->Recv();
+
+	}
+
 	listener.End();
 
 	return 0;

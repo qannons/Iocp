@@ -1,7 +1,11 @@
 #pragma once
+#include "IocpEvent.h"
+#include "IocpCore.h"
 
-class Session
+class Session : public IocpObject
 {
+	friend class Listener;
+
 public:
 	Session() 
 	{
@@ -9,15 +13,27 @@ public:
 	}
 
 public:
+	virtual HANDLE GetHandle(void) override { return (HANDLE)mSocket; };
+	
+public:
 	void Connect();
+	void NBSend(const char* str);
 	void Send(const char* str);
 	void Recv();
+
+private:
 
 private:
 	SOCKET mSocket = INVALID_SOCKET;
 
 private:
 	char mSendBuf[1024];
+	char mRecvBuf[1024];
+
 	SOCKADDR_IN mAddr;
+
+private:
+	SendEvent mSendEvent;
+	RecvEvent mRecvEvent;
 };
 

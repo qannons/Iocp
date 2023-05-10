@@ -20,6 +20,8 @@ using UniqueLock = std::unique_lock<std::mutex>;
 using LockGuard = std::lock_guard<std::mutex>;
 
 using SessionRef = std::shared_ptr<class Session>;
+using IocpCoreRef = std::shared_ptr<class IocpCore>;
+using IocpObjectRef = std::shared_ptr<class IocpObject>;
 
 #define size16(val)		static_cast<int16>(sizeof(val))
 #define size32(val)		static_cast<int32>(sizeof(val))

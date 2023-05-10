@@ -3,7 +3,7 @@
 class Listener
 {
 public:
-	Listener();
+	Listener(IocpCoreRef iocpCore);
 	~Listener();
 public:
 	void Start();
@@ -14,7 +14,9 @@ private:
 
 private:
 	SOCKET mSocket = INVALID_SOCKET;
-	thread* mWorker;
+	thread* mWorker = nullptr;
 	SOCKADDR_IN mAddr;
+	IocpCoreRef mCore = nullptr;
 };
+
 

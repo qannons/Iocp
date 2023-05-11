@@ -10,16 +10,26 @@ int main()
 		return 1;
 	}
 	
-	Listener listener;
+	IocpCoreRef iocpCore = make_shared<IocpCore>();
 
+	Listener listener(iocpCore);
 	listener.Start();
-	while (true)
-	{
-		GSessionManager->Recv();
-
-	}
+	
+	vector<thread> v;
+	v.push_back(thread([=]()
+		{
+			while(true)
+				iocpCore->Dispatch();
+		}
+	));
 
 	listener.End();
+
+	//for (thread& t : v)
+	//{
+	//	if (t.joinable())
+	//		t.join();
+	//}
 
 	return 0;
 }

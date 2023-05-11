@@ -4,7 +4,17 @@
 
 void Session::Dispatch(IocpEvent* iocpEvent, int numOfBytes)
 {
+	switch (iocpEvent->eventType)
+	{
+	case eEventType::SEND:
+		NBSend("dispatch");
+		break;
+	case eEventType::RECV:
+		NBRecv();
+		break;
+	default:
 
+	}
 }
 
 void Session::Connect()
@@ -28,11 +38,17 @@ void Session::NBSend(const char* str)
 	::WSASend(mSocket, &wsaBuf, 1, &bytes, 0, &mSendEvent, 0);
 }
 
-void Session::Send(const char* str)
+void Session::NBRecv()
 {
-	strcpy_s(mSendBuf, str);
-	if (::send(mSocket, mSendBuf, sizeof(mSendBuf), 0) <= 0)
-		SocketUtils::HandleError("Send");
+	WSABUF wsaBuf;
+	wsaBuf.buf = mRecvBuf;
+	wsaBuf.len = sizeof(mRecvBuf);
+
+	DWORD numOfBytes;
+	DWORD flag = 0;
+	::WSARecv(mSocket, &wsaBuf, 1, &numOfBytes, &flag, &mRecvEvent, nullptr);
+
+	cout << mRecvBuf << endl;
 }
 
 void Session::Recv()
@@ -41,6 +57,5 @@ void Session::Recv()
 		SocketUtils::HandleError("Recv");
 
 	cout << mRecvBuf << endl;
-	
 }
 

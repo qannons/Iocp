@@ -164,7 +164,6 @@
     <ClInclude Include="Listener.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Session.h" />
-    <ClInclude Include="SessionManager.h" />
     <ClInclude Include="SocketUtils.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
@@ -182,7 +181,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Session.cpp" />
-    <ClCompile Include="SessionManager.cpp" />
     <ClCompile Include="SocketUtils.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

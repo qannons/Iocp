@@ -19,7 +19,7 @@ int main()
 		cout << "Input: " << endl;
 		cin.getline(msg, 1024);
 
-		s.Send(msg);
+		s.NBSend(msg);
 		cout << "Send";
 	}
 	return 0;

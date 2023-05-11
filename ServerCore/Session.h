@@ -18,7 +18,7 @@ public:
 public:
 	void Connect();
 	void NBSend(const char* str);
-	void Send(const char* str);
+	void NBRecv();
 	void Recv();
 
 private:

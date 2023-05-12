@@ -1,19 +1,18 @@
 #include "pch.h"
 #include "CoreGlobal.h"
-#include "SessionManager.h"
-
-SessionManager* GSessionManager = nullptr;
 
 class CoreGlobal
 {
 public:
+	void Start() { cout << "start"; }
+public:
 	CoreGlobal()
 	{
-		GSessionManager = new SessionManager();
+		SocketUtils::Init();
 	}
 
 	~CoreGlobal()
 	{
-		delete GSessionManager;
+		SocketUtils::Clear();
 	}
 } GCoreGlobal;

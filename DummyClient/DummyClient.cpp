@@ -1,17 +1,22 @@
 ﻿#include "pch.h"
+#include "IocpCore.h"
 
 int main()
 {
 	this_thread::sleep_for(1s);
+	WSADATA wsaData;
+	if (::WSAStartup(MAKEWORD(2, 2), OUT & wsaData) != 0)
+		return -1;
 
-	WSAData wsaData;
-	if (::WSAStartup(MAKEWORD(2, 2), &wsaData) != 0)
-		return 0;
+	SocketUtils::Init();
 
-	Session s;
-	s.Connect();
+	SessionRef s = make_shared<Session>();
+	s->mSocket = ::socket(AF_INET, SOCK_STREAM, 0);
+	//IocpCore iocpCore;
+	//iocpCore.Register(s);
+
+	s->Connect();
 	cout << "Connected!" << endl;
-
 	char msg[1024];
 
 	while (true)
@@ -19,7 +24,7 @@ int main()
 		cout << "Input: " << endl;
 		cin.getline(msg, 1024);
 
-		s.NBSend(msg);
+		s->Send(msg);
 		cout << "Send";
 	}
 	return 0;

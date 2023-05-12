@@ -17,6 +17,8 @@ private:
 	thread* mWorker = nullptr;
 	SOCKADDR_IN mAddr;
 	IocpCoreRef mCore = nullptr;
+
+	vector<SessionRef> v;
 };
 
 

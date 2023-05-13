@@ -1,6 +1,7 @@
 #pragma once
 #include "IocpEvent.h"
 #include "IocpCore.h"
+#include "SocketUtils.h"
 
 class Session : public IocpObject
 {
@@ -9,19 +10,26 @@ class Session : public IocpObject
 public:
 	Session() 
 	{
-		mSocket = socket(AF_INET, SOCK_STREAM, 0);
+		mSocket = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED);
+		SocketUtils::SetReuseAddress(mSocket, true);
 	}
 
 public:
 	virtual HANDLE GetHandle(void) override { return (HANDLE)mSocket; };
-	
+	virtual void Dispatch(class IocpEvent* iocpEvent, int numOfBytes) override;
+
 public:
 	void Connect();
+
 	void NBSend(const char* str);
-	void Send(const char* str);
-	void Recv();
+	void BSend(const char* str);
+
+	void NBRecv();
+	void BRecv();
 
 private:
+	void RegisterRecv();
+	void ProcessRecv(int numofBytes);
 
 private:
 	SOCKET mSocket = INVALID_SOCKET;

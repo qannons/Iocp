@@ -3,23 +3,25 @@
 #include "SessionManager.h"
 #include "IocpCore.h"
 
-Listener::Listener(IocpCoreRef iocpCore) : mCore(iocpCore)
+Listener::Listener(IocpCoreRef pCore) : mCore(pCore)
 {
-	mSocket = socket(AF_INET, SOCK_STREAM, 0);
+	mSocket = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED);
 
 	mAddr.sin_family = AF_INET;
-	mAddr.sin_port = ::htons(7777);
+	mAddr.sin_port = ::htons(9898);
 	inet_pton(AF_INET, "127.0.0.1", &mAddr.sin_addr);
 }
 
 Listener::~Listener()
 {
 	delete mWorker;
+	SocketUtils::Close(mSocket);
 }
 
 void Listener::Start()
 {
 	int sizeAddr = sizeof(mAddr);
+	SocketUtils::SetReuseAddress(mSocket, true);
 	if (::bind(mSocket, (SOCKADDR*)&mAddr, sizeAddr) == SOCKET_ERROR)
 		SocketUtils::HandleError("Bind");
 
@@ -40,15 +42,17 @@ void Listener::fn()
 	{
 		int sizeAddr = sizeof(mAddr);
 		SOCKET socket = ::accept(mSocket, (SOCKADDR*)&mAddr, &sizeAddr);
+		SocketUtils::SetReuseAddress(mSocket, true);
 
 		if (socket == INVALID_SOCKET)
 			SocketUtils::HandleError("socket");
 
+		cout << "Connected!\n";
 		SessionRef session = make_shared<Session>();
 		session->mSocket = socket;
 
 		mCore->Register(session);
-		GSessionManager->Register(session);
+		//GSessionManager->Register(session);
 	}
 }
  

@@ -41,6 +41,8 @@ SOCKET SocketUtils::CreateSocket()
 void SocketUtils::HandleError(const char* cause)
 {
 	int errCode = ::WSAGetLastError();
+	if (errCode == WSA_IO_PENDING)
+		return;
 	cout << cause << ": " << errCode << endl;
 }
 

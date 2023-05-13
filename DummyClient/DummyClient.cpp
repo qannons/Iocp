@@ -8,8 +8,11 @@ int main()
 	if (::WSAStartup(MAKEWORD(2, 2), &wsaData) != 0)
 		return 0;
 
-	Session s;
-	s.Connect();
+	SessionRef s = make_shared<Session>();
+	IocpCoreRef iocpCore = make_shared<IocpCore>();
+	iocpCore->Register(s);
+
+	s->Connect();
 	cout << "Connected!" << endl;
 
 	char msg[1024];
@@ -19,7 +22,7 @@ int main()
 		cout << "Input: " << endl;
 		cin.getline(msg, 1024);
 
-		s.Send(msg);
+		s->NBSend(msg);
 		cout << "Send";
 	}
 	return 0;

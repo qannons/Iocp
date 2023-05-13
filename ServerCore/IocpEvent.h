@@ -14,8 +14,11 @@ class IocpEvent : public OVERLAPPED
 public:
 	IocpEvent(eEventType pEventType) : eventType(pEventType) {};
 
+	void			Init();
+
 public:
 	eEventType eventType;
+	IocpObjectRef owner = nullptr;
 };
 
 class SendEvent : public IocpEvent

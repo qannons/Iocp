@@ -10,6 +10,6 @@ void SessionManager::Recv()
 {
 	for (auto session : mSessions)
 	{
-		session->Recv();
+		session->NBRecv();
 	}
 }

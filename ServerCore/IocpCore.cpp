@@ -9,9 +9,17 @@ void IocpCore::Register(IocpObjectRef iocpObject)
 
 void IocpCore::Dispatch()
 {
-	DWORD bytes;
-	ULONG_PTR key;
+	DWORD numOfBytes = 0;
+	ULONG_PTR key = 0;
+	IocpEvent* iocpEvent = nullptr;
+	if (::GetQueuedCompletionStatus(mHandle, OUT & numOfBytes, OUT & key, OUT reinterpret_cast<LPOVERLAPPED*>(&iocpEvent), INFINITE))
+	{
+		IocpObjectRef iocpObject = iocpEvent->owner;
+		iocpObject->Dispatch(iocpEvent, numOfBytes);
+	}
+}
 
-	IocpEvent* iocpEvent;
-	::GetQueuedCompletionStatus(mHandle, &bytes, &key, (LPOVERLAPPED*)&iocpEvent, INFINITE)
+void IocpCore::AddSession(SessionRef session)
+{
+	mSessions.push_back(session);
 }

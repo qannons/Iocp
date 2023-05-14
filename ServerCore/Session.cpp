@@ -15,19 +15,32 @@ void Session::Dispatch(IocpEvent* iocpEvent, int numOfBytes)
 
 void Session::Connect()
 {
+	::memset(&mAddr, 0, sizeof(mAddr));
 	mAddr.sin_family = AF_INET;
-	mAddr.sin_port = ::htons(9898);
-	inet_pton(AF_INET, "127.0.0.1", &mAddr.sin_addr);
-	if (::bind(mSocket, (SOCKADDR*)&mAddr, sizeof(mAddr)) == SOCKET_ERROR)
+	::inet_pton(AF_INET, "127.0.0.1", &mAddr.sin_addr);
+	mAddr.sin_port = ::htons(7777);
+
+
+	while (true)
 	{
-		SocketUtils::HandleError("Connect Bind");
+		if (::connect(mSocket, (SOCKADDR*)&mAddr, sizeof(mAddr)) == SOCKET_ERROR)
+		{
+			// 원래 블록했어야 했는데... 너가 논블로킹으로 하라며?
+			if (::WSAGetLastError() == WSAEWOULDBLOCK)
+				continue;
+			// 이미 연결된 상태라면 break
+			if (::WSAGetLastError() == WSAEISCONN)
+				break;
+			// Error
+			SocketUtils::HandleError("Connect");
+			break;
+		}
 	}
 
-	if (::connect(mSocket, (SOCKADDR*)&mAddr, sizeof(mAddr)) == SOCKET_ERROR)
-		SocketUtils::HandleError("Connect");
+	cout << "Connected to Server!" << endl;
 }
 
-void Session::NBSend(const char* str)
+void Session::Send(const char* str)
 {
 	mSendEvent.Init();
 	mSendEvent.owner = shared_from_this();
@@ -47,28 +60,11 @@ void Session::NBSend(const char* str)
 			mSendEvent.owner = nullptr; // RELEASE_REF
 		}
 	}
-		
-
 }
 
-void Session::BSend(const char* str)
-{
-	strcpy_s(mSendBuf, str);
-	if (::send(mSocket, mSendBuf, sizeof(mSendBuf), 0) <= 0)
-		SocketUtils::HandleError("Send");
-}
-
-void Session::NBRecv()
+void Session::Recv()
 {
 	RegisterRecv();
-}
-
-void Session::BRecv()
-{
-	if (::recv(mSocket, mRecvBuf, sizeof(mRecvBuf), 0) <= 0)
-		SocketUtils::HandleError("Recv");
-
-	cout << mRecvBuf << endl;
 }
 
 void Session::RegisterRecv()

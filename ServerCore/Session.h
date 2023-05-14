@@ -10,7 +10,7 @@ class Session : public IocpObject
 public:
 	Session() 
 	{
-		mSocket = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED);
+		//mSocket = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED);
 		SocketUtils::SetReuseAddress(mSocket, true);
 	}
 
@@ -21,8 +21,7 @@ public:
 public:
 	void Connect();
 
-	void NBSend(const char* str);
-	void BSend(const char* str);
+	void Send(const char* str);
 
 	void NBRecv();
 	void BRecv();
@@ -31,7 +30,7 @@ private:
 	void RegisterRecv();
 	void ProcessRecv(int numofBytes);
 
-private:
+public:
 	SOCKET mSocket = INVALID_SOCKET;
 
 private:

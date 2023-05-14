@@ -14,16 +14,11 @@ int main()
 	Listener listener(iocpCore);
 
 	listener.Start();
-	vector<thread> v;
-	v.push_back(thread([=]()
-		{
-			iocpCore->Dispatch();
-		}));
-	/*while (true)
-	{
-		GSessionManager->Recv();
 
-	}*/
+	while (true)
+	{
+		iocpCore->Dispatch();
+	}
 
 	listener.End();
 

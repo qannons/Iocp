@@ -19,6 +19,7 @@ public:
 public:
 	HANDLE GetHandle() { return mHandle; }
 	int GetSessionCount(void) { return mSessions.size(); }
+
 public:
 	void Register(IocpObjectRef iocpObject);
 	void Dispatch();

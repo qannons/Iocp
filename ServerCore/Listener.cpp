@@ -8,7 +8,7 @@ Listener::Listener(IocpCoreRef pCore) : mCore(pCore)
 	mSocket = WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED);
 
 	mAddr.sin_family = AF_INET;
-	mAddr.sin_port = ::htons(9898);
+	mAddr.sin_port = ::htons(7777);
 	inet_pton(AF_INET, "127.0.0.1", &mAddr.sin_addr);
 }
 
@@ -42,7 +42,7 @@ void Listener::fn()
 	{
 		int sizeAddr = sizeof(mAddr);
 		SOCKET socket = ::accept(mSocket, (SOCKADDR*)&mAddr, &sizeAddr);
-		SocketUtils::SetReuseAddress(mSocket, true);
+		SocketUtils::SetReuseAddress(socket, true);
 
 		if (socket == INVALID_SOCKET)
 			SocketUtils::HandleError("socket");
@@ -52,6 +52,7 @@ void Listener::fn()
 		session->mSocket = socket;
 
 		mCore->Register(session);
+		session->Recv();
 		//GSessionManager->Register(session);
 	}
 }

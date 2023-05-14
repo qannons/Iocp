@@ -12,7 +12,10 @@ enum class eEventType
 class IocpEvent : public OVERLAPPED
 {
 public:
-	IocpEvent(eEventType pEventType) : eventType(pEventType) {};
+	IocpEvent(eEventType pEventType) : eventType(pEventType) 
+	{
+		Init();
+	};
 
 	void			Init();
 

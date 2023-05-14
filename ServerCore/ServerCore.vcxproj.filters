@@ -36,9 +36,6 @@
     <ClInclude Include="Session.h">
       <Filter>Network</Filter>
     </ClInclude>
-    <ClInclude Include="SessionManager.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="CoreGlobal.h">
       <Filter>Main</Filter>
     </ClInclude>
@@ -67,9 +64,6 @@
     </ClCompile>
     <ClCompile Include="Session.cpp">
       <Filter>Network</Filter>
-    </ClCompile>
-    <ClCompile Include="SessionManager.cpp">
-      <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="CoreGlobal.cpp">
       <Filter>Main</Filter>

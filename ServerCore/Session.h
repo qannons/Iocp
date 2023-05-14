@@ -23,8 +23,7 @@ public:
 
 	void Send(const char* str);
 
-	void NBRecv();
-	void BRecv();
+	void Recv();
 
 private:
 	void RegisterRecv();

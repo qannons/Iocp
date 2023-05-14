@@ -1,6 +1,5 @@
 ﻿#include "pch.h"
 #include "Listener.h"
-#include "SessionManager.h"
 
 int main()
 {
@@ -19,7 +18,6 @@ int main()
 	{
 		iocpCore->Dispatch();
 	}
-
 	listener.End();
 
 	return 0;

@@ -21,7 +21,11 @@ public:
 
 public:
 	eEventType eventType;
+<<<<<<< HEAD
 	IocpObjectRef owner = nullptr;
+=======
+	IocpObjectRef owner;
+>>>>>>> df37140cdd791fe3da6d1dadb6b961f4c89e2939
 };
 
 class SendEvent : public IocpEvent

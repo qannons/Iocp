@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Listener.h"
-#include "SessionManager.h"
 #include "IocpCore.h"
 
 Listener::Listener(IocpCoreRef pCore) : mCore(pCore)
@@ -51,9 +50,14 @@ void Listener::fn()
 		SessionRef session = make_shared<Session>();
 		session->mSocket = socket;
 
+		v.push_back(session);
+
 		mCore->Register(session);
 		session->Recv();
+<<<<<<< HEAD
 		//GSessionManager->Register(session);
+=======
+>>>>>>> df37140cdd791fe3da6d1dadb6b961f4c89e2939
 	}
 }
  

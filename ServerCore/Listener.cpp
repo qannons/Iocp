@@ -50,8 +50,6 @@ void Listener::fn()
 		SessionRef session = make_shared<Session>();
 		session->mSocket = socket;
 
-		v.push_back(session);
-
 		mCore->Register(session);
 		session->Recv();
 		//GSessionManager->Register(session);

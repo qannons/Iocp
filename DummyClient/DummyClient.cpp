@@ -1,12 +1,12 @@
 ﻿#include "pch.h"
+#include "IocpCore.h"
 
 int main()
 {
 	this_thread::sleep_for(1s);
-
-	WSAData wsaData;
-	if (::WSAStartup(MAKEWORD(2, 2), &wsaData) != 0)
-		return 0;
+	WSADATA wsaData;
+	if (::WSAStartup(MAKEWORD(2, 2), OUT & wsaData) != 0)
+		return -1;
 
 	SOCKET Socket = ::WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED);
 	SessionRef s = make_shared<Session>();
@@ -17,7 +17,6 @@ int main()
 
 	s->Connect();
 	cout << "Connected!" << endl;
-
 	char msg[1024];
 
 	while (true)

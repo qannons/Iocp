@@ -13,7 +13,7 @@ public:
 	IocpCore() 
 	{
 		mHandle = ::CreateIoCompletionPort(INVALID_HANDLE_VALUE, 0, 0, 0);
-		ASSERT_CRASH(mHandle != INVALID_HANDLE_VALUE);
+		ASSERT_CRASH(mHandle == INVALID_HANDLE_VALUE);
 	}
 
 public:

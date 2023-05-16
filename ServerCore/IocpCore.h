@@ -26,6 +26,7 @@ public:
 
 	void AddSession(SessionRef session);
 
+	void fn(const char* str);
 //private:
 public:
 	HANDLE mHandle;

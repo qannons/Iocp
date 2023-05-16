@@ -29,3 +29,7 @@ using IocpObjectRef = std::shared_ptr<class IocpObject>;
 #define len32(arr)		static_cast<int32>(sizeof(arr)/sizeof(arr[0]))
 
 #define _STOMP
+//#define SERVER_ADDR "192.168.55.54"
+#define SERVER_ADDR "127.0.0.1"
+
+#define LOCAL_HOST "127.0.0.1"

@@ -8,7 +8,7 @@ Listener::Listener(IocpCoreRef pCore) : mCore(pCore)
 
 	mAddr.sin_family = AF_INET;
 	mAddr.sin_port = ::htons(7777);
-	inet_pton(AF_INET, "127.0.0.1", &mAddr.sin_addr);
+	inet_pton(AF_INET, LOCAL_HOST, &mAddr.sin_addr);
 }
 
 Listener::~Listener()
@@ -51,8 +51,7 @@ void Listener::fn()
 		session->mSocket = socket;
 
 		mCore->Register(session);
-		session->Recv();
-		//GSessionManager->Register(session);
+		mCore->AddSession(session);
 	}
 }
  

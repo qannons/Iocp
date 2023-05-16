@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "IocpCore.h"
+#include "Session.h"
 
 void IocpCore::Register(IocpObjectRef iocpObject)
 {
@@ -22,4 +23,12 @@ void IocpCore::Dispatch()
 void IocpCore::AddSession(SessionRef session)
 {
 	mSessions.push_back(session);
+}
+
+void IocpCore::fn(const char* str)
+{
+	for (auto i : mSessions)
+	{
+		i->Send(str);
+	}
 }

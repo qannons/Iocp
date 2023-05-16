@@ -17,7 +17,7 @@ void Session::Connect()
 {
 	::memset(&mAddr, 0, sizeof(mAddr));
 	mAddr.sin_family = AF_INET;
-	::inet_pton(AF_INET, "127.0.0.1", &mAddr.sin_addr);
+	::inet_pton(AF_INET, SERVER_ADDR, &mAddr.sin_addr);
 	mAddr.sin_port = ::htons(7777);
 
 
@@ -35,6 +35,7 @@ void Session::Connect()
 			SocketUtils::HandleError("Connect");
 			break;
 		}
+		RegisterRecv();
 	}
 
 	cout << "Connected to Server!" << endl;

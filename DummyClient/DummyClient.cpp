@@ -19,6 +19,13 @@ int main()
 	cout << "Connected!" << endl;
 	char msg[1024];
 
+	vector<thread> v;
+	v.push_back(thread([=]() 
+		{
+			while(true)
+				iocpCore->Dispatch();
+		}));
+
 	while (true)
 	{
 		cout << "Input: " << endl;

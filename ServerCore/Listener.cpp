@@ -54,10 +54,7 @@ void Listener::fn()
 
 		mCore->Register(session);
 		session->Recv();
-<<<<<<< HEAD
 		//GSessionManager->Register(session);
-=======
->>>>>>> df37140cdd791fe3da6d1dadb6b961f4c89e2939
 	}
 }
  

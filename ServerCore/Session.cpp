@@ -8,6 +8,12 @@ void Session::Dispatch(IocpEvent* iocpEvent, int numOfBytes)
 	{
 	case eEventType::RECV:
 		ProcessRecv(numOfBytes);
+		break;
+
+	case eEventType::DISCONNECT:
+		ProcessDisconnect();
+		break;
+
 	default:
 		break;
 	}
@@ -100,3 +106,7 @@ void Session::ProcessRecv(int numofBytes)
 	RegisterRecv();
 }
 
+void Session::ProcessDisconnect(void)
+{
+	
+}

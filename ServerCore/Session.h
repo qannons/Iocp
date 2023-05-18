@@ -26,8 +26,10 @@ public:
 	void Recv();
 
 private:
-	void RegisterRecv();
+	void RegisterRecv(void);
 	void ProcessRecv(int numofBytes);
+
+	void ProcessDisconnect(void);
 
 public:
 	SOCKET mSocket = INVALID_SOCKET;

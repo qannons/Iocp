@@ -18,6 +18,11 @@ void IocpCore::Dispatch()
 		IocpObjectRef iocpObject = iocpEvent->owner;
 		iocpObject->Dispatch(iocpEvent, numOfBytes);
 	}
+	else
+	{
+		IocpObjectRef iocpObject = iocpEvent->owner;
+		iocpObject->Dispatch(iocpEvent, numOfBytes);
+	}
 }
 
 void IocpCore::AddSession(SessionRef session)

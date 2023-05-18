@@ -24,7 +24,7 @@ int main()
 	char msg[1024];
 	while (true)
 	{
-		cout << "Input: " << endl;
+		cout << "input: " << endl;
 		cin.getline(msg, 1024);
 
 		iocpCore->fn(msg);

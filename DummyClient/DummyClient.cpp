@@ -17,7 +17,6 @@ int main()
 
 	s->Connect();
 	cout << "Connected!" << endl;
-	char msg[1024];
 
 	vector<thread> v;
 	v.push_back(thread([=]() 
@@ -26,6 +25,7 @@ int main()
 				iocpCore->Dispatch();
 		}));
 
+	char msg[1024];
 	while (true)
 	{
 		cout << "Input: " << endl;

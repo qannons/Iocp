@@ -2,6 +2,11 @@
 #include "Session.h"
 #include <cstring>
 
+Session::~Session()
+{
+	SocketUtils::Close(mSocket);
+}
+
 void Session::Dispatch(IocpEvent* iocpEvent, int numOfBytes)
 {
 	switch (iocpEvent->eventType)
@@ -44,6 +49,7 @@ void Session::Connect()
 		RegisterRecv();
 	}
 
+	
 	cout << "Connected to Server!" << endl;
 }
 
@@ -106,7 +112,17 @@ void Session::ProcessRecv(int numofBytes)
 	RegisterRecv();
 }
 
+void Session::ProcessConnect(void)
+{
+	mConnected = true;
+
+	GetCore()->Register(GetSession());
+	GetCore()->AddSession(GetSession());
+
+	RegisterRecv();
+}
+
 void Session::ProcessDisconnect(void)
 {
-	
+	GetCore()->EraseSession(GetSession());
 }

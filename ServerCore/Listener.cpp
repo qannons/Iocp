@@ -44,16 +44,19 @@ void Listener::fn()
 		SocketUtils::SetReuseAddress(socket, true);
 
 		if (socket == INVALID_SOCKET)
+		{
 			SocketUtils::HandleError("socket");
+			continue;
+		}
 
 		cout << "Connected!\n";
 		SessionRef session = make_shared<Session>();
 		session->mSocket = socket;
 
-		mCore->Register(session);
-		mCore->AddSession(session);
+		//mCore->Register(session);
+		//mCore->AddSession(session);
 
-		session->Recv();
+		session->ProcessConnect();
 	}
 }
  

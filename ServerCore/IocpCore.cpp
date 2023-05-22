@@ -27,7 +27,12 @@ void IocpCore::Dispatch()
 
 void IocpCore::AddSession(SessionRef session)
 {
-	mSessions.push_back(session);
+	mSessions.insert(session);
+}
+
+void IocpCore::EraseSession(SessionRef session)
+{
+	mSessions.erase(session);
 }
 
 void IocpCore::fn(const char* str)

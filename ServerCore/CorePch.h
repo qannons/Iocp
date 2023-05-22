@@ -19,6 +19,7 @@ using namespace std;
 
 #include <vector>
 #include <string>
+#include <set>
 
 #include "Session.h"
 #include "SocketUtils.h"

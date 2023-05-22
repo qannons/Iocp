@@ -25,11 +25,12 @@ public:
 	void Dispatch();
 
 	void AddSession(SessionRef session);
+	void EraseSession(SessionRef session);
 
 	void fn(const char* str);
-//private:
-public:
+
+private:
 	HANDLE mHandle;
-	vector<SessionRef> mSessions;
+	set<SessionRef> mSessions;
 };
 
